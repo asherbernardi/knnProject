@@ -41,6 +41,23 @@ def single_knn(data, targets, k, metric, input):
 def knn(data, targets, k, metric, inputs):
     """
     K-Nearest Neighbors
+
+    Get estimates for the classification of inputs using the k-nearest
+    neighbors method.
+
+    Parameters:
+        data (array-like): The data given to train the model. It should be
+                           of shape (n,m), containing n data points each of
+                           dimension m.
+        targets (list): The target values corresponding to each data point
+                        in data, size n.
+        k (int): The number of neighbors to consider.
+        metric (function): The method for comparing distances between vectors.
+        inputs (array-like): The data to test of shape (n,m).
+
+    Return:
+        list: the list of estimates for the classification of inputs based on
+              the training data.
     """
     data = np.array(data)
     N = data.shape[0]
