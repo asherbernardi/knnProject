@@ -1,10 +1,12 @@
-#Asher Bernardi - k-nearest neighbors
+# athor: Asher Bernardi
 import numpy as np
+import math
+from progress_bar import ProgressBar
 
 def minkowski_L_k_norm(x, y, k):
     """Compute the Minkowski L_k norm between two vectors"""
     assert len(x) == len(y)
-    return np.power( sum(abs(x[i] - y[i])**k for i in range(len(x))), 1./k)
+    return math.pow( sum(abs(x[i] - y[i])**k for i in range(len(x))), 1./k)
 
 def get_L_k_norm_function(k):
     """Returns a function that computes the L_k norm, given two vectors"""
@@ -12,11 +14,11 @@ def get_L_k_norm_function(k):
 
 def manhattan(x, y):
     """Compute the Manhattan distance (L1 norm)"""
-    return minkowski_L_k_norm(x,y,1)
+    return sum(abs(x[i] - y[i]) for i in range(len(x)))
 
 def euclidean(x, y):
     """Compute the euclidean distance (L2 norm)"""
-    return minkowski_L_k_norm(x,y,2)
+    return math.sqrt( sum((x[i] - y[i])**2 for i in range(len(x))) )
 
 def single_knn(data, targets, k, metric, input):
     """Estimate the classification of a data point using k-nearest neighbors"""
@@ -36,6 +38,7 @@ def single_knn(data, targets, k, metric, input):
             bag_classes[ bundled_data[j][1] ] = 0
         bag_classes[ bundled_data[j][1] ] += 1
     # find the max, that's the answer
+
     return max(bag_classes.items(), key = lambda y: y[1])[0]
 
 def knn(data, targets, k, metric, inputs):
@@ -64,8 +67,13 @@ def knn(data, targets, k, metric, inputs):
     D = data.shape[1]
     assert len(targets) == N
     assert k < N
+
     # For each input, we need to do the whole algorithm
     estimates = [0]*len(inputs)
+    pb = ProgressBar('Progress', max_value = len(inputs), total_width = 50)
     for i,x in enumerate(inputs):
         estimates[i] = single_knn(data, targets, k, metric, x)
+        pb(i)
+    pb(len(inputs))
+
     return estimates
