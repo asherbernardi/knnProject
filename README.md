@@ -1,5 +1,11 @@
 # Testing KNN
 
+Necessary packages installed:
+- progress_bar
+- prettytable
+- numpy
+- sklearn
+
 ## Methodology
 
 I tested my k-nearest neighbors algorithm using 5 different datasets: iris, wine, mushroom, digits, and **another digits dataset that I compiled myself**. When you run `testknn.py`, it will run through a few iterations of each dataset to test its accuracy. For some datasets, it tests with several different test set sizes and several different values for k to find which give greatest accuracy. It also randomly shuffles the data every run so as to not bias the test. A progress bar is shown to demonstrate the progress of the algorithm, and the running time of the algorithm on a specific dataset is printed after each test. In some instances, Sci-Kit Learn's KNN was used to compare accuracy with mine.
